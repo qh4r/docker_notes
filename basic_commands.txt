@@ -1,0 +1,63 @@
+docker version 		# wersja
+docker info  		# informacje
+
+docker run hello-world
+					# pobiera obraz testowy, tworzy kontener
+					# i odpala binarke ktora wypisuje hello world
+					
+docker ps 			# wyswietla dzialajace kontenery
+docker ps -a 		# wyswietla kontenery ktore dzialaly ale sie zakonczyly					
+
+# dopisek -a ogolnie dziala ze wszystkimi konedami i powoduje wyswietlanie takze
+# elementow nieaktywnych
+# np docker container ls -a
+
+docker images  		# wypisuje obrazy
+
+# docker run szuka dockera domyslnie w docker hubie jesli nie ma go dostepnego lokalnie
+# nastepnie daemon odpala kontener i stanowi proxy do komunikacji z dokerem
+
+# image -> zatrzymany kontener
+# kontener -> działający image
+
+docker pull 		# sciaga image bez uruchamiania go
+					# przyklad: docker pull alpine
+
+docker pull ubuntu:14.04	#sciaga dokladna wersje - 14.04
+docker rmi ubuntu:14.04 	#usuwa podnay img - mozna podac tez guid widoczny w images
+
+docker start 		# uruchamia konetener
+docker stop			# zatrzymuje kontener
+docker rm 			# usuwa zatrzymany kontener - tracone sa dane zapisane na nim
+					# jesli dane sa w volumenie albo innym storze mogą przetrwać
+
+
+docker run -d --name web -p 80:8080 nigelpoulton/pluralsight-docker-ci
+# -d -- detached mode - w tle nie binduje outputu do akutalnego termianala
+# --name nazwa pod jaka dzialal bedzie image ~ musi byc unikalna
+
+# -p 80:8080 binduje port 80 HOSTA (lokalnie) do portu 8080 KONTENERA
+# nigelpoulton/pluralsight-docker-ci - adres prywatnego repo na docker hubie
+
+# nastepnie mozna zatrzymywac i startowac przy pomocy imienia lub hasha
+docker stop web
+
+docker run -it --name temp ubuntu /bin/bash 
+			# opdala basha na ubuntu
+			# kontener ubuntu wymaga komendy ktora ma odpalic przy starcie
+# -it - interactive - bash bedzie pozawalal wykonywac komendy
+
+# ctrl + p + q -- wyjscie z kontenera bez zabijania go (gdy byl interaktywnie uruchomiony)
+
+docker rm [hash|nazwa] 	#usuwa dany konetener
+
+# mozna miec wiele kontenerow z tych samych dokerow ale z roznymi name
+
+docker rmi  # usuwa obrazy
+
+docker rm $(docker ps -aq) # USUWA WSZYSTKIE KONTENERY
+docker rmi $docker images -q) # USUWA WSZYSTKIE OBRAZY
+
+# -q powoduje wyświetlenie TYLKO GUIDA
+
+# docker ps - zasadniczo wyswietla kontenery działające a z -a te ktore działały
