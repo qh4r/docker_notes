@@ -1,0 +1,26 @@
+docker swarm init 	#inicjalizuje swarm
+docker swarm init --advertise-addr 172.31.12.161:2377 --listen-addr 172.31.12.161:2377
+		# --advertise-addr - powoduje ze dany adres bedzie zawsze uzywany do rzeczy
+		# zwiazanych ze swarmem (gdy maszyna ma wiele ip)
+		# --listens-addr - wezel na tym adresie nasluchuje ruchu zwizanego z swarm menagerem
+		# LISTEN NIE DZIALA NARAZIE NA DOCKER FOR MAC
+docker swarm leave --force 	
+	# opuszcza waarm a force wymusza dla ostatniego wezla (usuwa swarm)
+
+# PORTY:
+# 2377 - propozycja by zarejestrowac jako porrt swarm	
+# 2375 - oficjalnie engine port
+# 2376 - oficjalnie secure engine prot
+
+
+docker swarm join-token manager
+docker swarm join-token worker
+# to czy nowy node bedzie amnagerem czy workerem zalezy od tokenu podanego podczas dolaczania
+# powyzsze metody generuja tokeny ktore mozna uzyc do dolaczania
+
+docker node ls	# wypisuje elementy w swarmie
+
+docker node promote [id] 	# upgraduje workera do menagera
+
+# menager ma prawo glosu w kworum , worker tylko wykonuje zadania
+# kazdy menager takze jest workerem 
