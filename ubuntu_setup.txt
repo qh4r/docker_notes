@@ -1,0 +1,30 @@
+clean Ubuntu vm setup 16.04
+
+in VirtualBox
+	- cmd+, and create host-only network with default settings
+	- create default ubuntu vm
+	- attach it to host only network (as 2nd network)
+	- mount cd and start
+Install ubuntu server
+	- any lang settings
+	- no need for encryption
+	- Guided - use entire disk with lvm	
+	- can use % to declare partition size ex.: 75%
+	- no need for proxy
+	- no need for updates
+	- best to OpenSSH server (space selects, enter continues)
+	- install grub (if only os)
+Install docker on ubuntu server:
+	* we are installing docker clinet and daemon - client is comunicating with daemon
+	* they can talk over a network but in this case we will install whole package
+	* sudo su ~ pass
+	* cd to root
+	* on ubuntu docker package is called docker.io
+	- apt-get update  * best do that
+	- apt-get install -y docker.io * not working on 16.04
+	- https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+	- docker info
+	- ls -l /run * listuje grupy
+	* test after adding user to docker group (all in link):
+	- docker run -it ubuntu bin/bash * to sprawia ze odpalimy kontener z ubuntu w trybie roota
+	
