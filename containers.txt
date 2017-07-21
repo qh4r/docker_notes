@@ -1,0 +1,43 @@
+* to dettach from container:
+	Ctrl + P + Q
+	
+* docker stop sends sig term signal with PID 1 which will cause process to terminate once it can
+* and therefor stop the container once it does
+
+* docker kill sends kill signal with PID 1 and forces the termination
+
+* once process with PID 1 ends container closes
+
+- you can reattach with 
+	docker attach {name or id}
+	
+* PID 1 is init process in unix
+	* all processes are children of init process in some way (or forked)
+	* killing init kills them all
+
+* it is possible to run more then 1 process in container but it's not easy and not default
+
+* lists all containers:
+	ls -l /var/lib/docker/containers/
+	
+* you can not remove running container need to stop it first
+
+- docker rm {container id} * removes container
+
+** SIDENOTE ** creating aliases example
+	alias dps="docker ps"
+	
+- docker inspect {image or container id }
+
+* docker attach attaches to pid 1
+
+* to get container Pid (pid of the proces that runs on host)
+	- docker inspect {container id} | grep Pid
+	
+* to enter said proces (no pid 1)
+	nsenter -m -u -n -p -i -t {PID} /bin/bash
+
+* also works since docker 1.3 (?)
+	docker exec -it {container name} /bin/bash
+	
+!!** in two above ctrl+c or exit will not cause container process to get stopped **!!
