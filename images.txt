@@ -1,0 +1,33 @@
+docker pull XXX * downloads images
+docker pull coreos/apache * example
+* this allows us to look into image filesystem from outside
+	ls -l /var/lib/docker/aufs/layers/_docker_layer_id_ 
+
+* such command will cause docker to run command and exit container right after (no -it)
+	docker run ubuntu /bin/bash -c "echo 'some conent' > /tmp/awesome-file"
+	
+* creates image copy based on existing one (kind of snapshot)
+	docker commit {existing docker id} {new name}
+
+
+
+* shows history of commands that were run on docker image
+	docker history {img name}
+
+* save image to tar
+	docker save -o {name.tar} {image name}
+	
+* look through tar 
+	tar -tf /tmp/asd.tar
+	
+* load tar
+	docker load -i /tmp/asd.tar
+
+* this way we can run image - make some changes on it (on new layer) and
+* create new image based on contents of container that we got (using commit)
+* then run this new docker with previous layer that we created as immutable
+
+* running everything in detached mode is possible with -d
+* container can run single process and it will stop once this process ends
+
+docker top * shows processes running in docker
