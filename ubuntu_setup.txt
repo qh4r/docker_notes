@@ -27,4 +27,50 @@ Install docker on ubuntu server:
 	- ls -l /run * listuje grupy
 	* test after adding user to docker group (all in link):
 	- docker run -it ubuntu bin/bash * to sprawia ze odpalimy kontener z ubuntu w trybie roota
+	docker 
+	
+	* user groups data is kept in /etc/group - this goes for all linus distros
+	* to add user qh4r to group docker:
+	- gpasswd -a qh4r docker
+	
+	* printing daemons listening on network ports:
+	- service docker stop
+	- netstat -tpl * tcp listening program
+	- docker -H 0.0.0.0:2375 & * makes docker listen on port 
+	
+	ADDING NETWORK SETTING
+	- /etc/network/interfaces
+	add for example:
+	
+	auto eth1
+
+	iface eth1 inet static
+
+	address 192.168.56.50
+
+	netmask 255.255.255.0
+	
+	---------
+	ifup eth1 * to refresh
+	ip a * shows all ips (like ifconfig -a)
+	
+	* taka komenda pozwoli sluchac i na porcie zewnetrzym i unixowym sockecie lokalnie
+	- docker -H ip_address:2375 -H unix:///var/run/docker.sock &
+	
+	
+On Centos
+	- su
+	- yum install docker
+	- systemctl status docker.service
+	- systemctl start docker.service
+	- export DOCKER_HOST="tcp://ip_address" * ustawia demona na nasluchujacy pod podnaym adresem
+	- export DOCKER_HOST= * restaruje demona do lokalnego socketa
+	
+	* -it -- makes docker run in interactive mode
+	- docker run -it centos /bin/bash * runs docker with centos
+	
+	docker start id * starsts docker
+	docker attach id * attaches to docker process (ex interactive console)
+	docker ps * shows running proceses
+	docker ps -a * shows all proceses
 	
