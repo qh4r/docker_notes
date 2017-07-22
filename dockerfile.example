@@ -1,0 +1,9 @@
+# MUST be called Dockerfile
+# - hash means this is a comment
+# Ubuntu Hello World container
+
+FROM ubuntu:15.04
+MAINTAINER qhr666@gmail.com
+RUN apt-get update
+RUN apt-get install -y nodejs
+CMD ["echo", "Hello World"]

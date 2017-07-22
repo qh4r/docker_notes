@@ -1,0 +1,42 @@
+* for the record Dockerfile is always read left to right from top to bottom
+
+* anything that is deeper in directories tree then Dockerfile gets included in our built
+
+docker build * builds new image from instructions in Dockerfile
+
+* FROM has to be 1st instruction in docker file. It says which image this docker
+* will be based on.
+
+*its best not to use latest cause those may change - logic!
+
+* use RUN instructions to run commmands on images
+* we can use RUN to install various apps on image
+* EVERY RUN INSTRUCTION CREATES NEW LAYER ON IMAGE
+
+* CMD performs commands [{command}, [...{arguments}]]
+* exmaple CMD ["echo", "Hi"]
+
+!! ** SIDE NOTE ** in apt-get '-y' means assume yes to all questions **
+
+* thid command builds image from Dokerfile in current folder:
+docker build -t hellonode:0.1 .
+* image is tagged (-t) as hellonode:0.1
+* hellonode is REPOSITORY
+* 0.1 is TAG
+* will be created in current directory (.)
+
+* to run installed nodejs on ubuntu image
+docker run -it hellonode:0.1 nodejs
+
+* this command will run docker and all given commands in our case update install node,
+* echo Hello and quit:
+docker run {img id}
+
+* what Dockerfile does is it spins up docker container with base (FROM) image 
+* and performs given commands in given order
+* then it commits the image and removes the temp container
+
+- FROM scratch * is a special base image - basically empty image with no real base
+
+- ADD * adds files to our image 
+* ADD {source_file} {target_dir}
