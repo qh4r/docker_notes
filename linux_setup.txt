@@ -38,7 +38,7 @@ Install docker on ubuntu server:
 	- netstat -tpl * tcp listening program
 	- docker -H 0.0.0.0:2375 & * makes docker listen on port 
 	
-	ADDING NETWORK SETTING
+	ADDING NETWORK SETTING 
 	- /etc/network/interfaces
 	add for example:
 	
@@ -63,8 +63,8 @@ On Centos
 	- yum install docker
 	- systemctl status docker.service
 	- systemctl start docker.service
-	- export DOCKER_HOST="tcp://ip_address" * ustawia demona na nasluchujacy pod podnaym adresem
-	- export DOCKER_HOST= * restaruje demona do lokalnego socketa
+	- export DOCKER_HOST="tcp://ip_address" * sets up docker to look for docker daemon at given address
+	- export DOCKER_HOST= * restarts docker to look for daemon on local unix socket
 	
 	* -it -- makes docker run in interactive mode
 	- docker run -it centos /bin/bash * runs docker with centos

@@ -1,0 +1,51 @@
+* default registry is hub.docker.com
+	** dockerhub only gives u 1 private repo for free **
+
+* we need to have an image that has the name of our repo
+docker tag {existing image id, ex.: 672482e8e6b8} {repo_name, ex.: qh4r/hellonode:1.0}
+
+* before push you need to login
+	docker login --username=<user username> --email=<user email address>
+
+
+* to push 
+	docker push {full_repo_name (in line with our docker name)}
+	ex.: docker push qh4r/hellonode:1.0
+
+* RUNNING OWN REGISTRY
+* to start:
+	docker run -d -p 5000:5000 registry
+	
+	- registry is an image that you can pull from docker ub
+	- -p 5000:5000 maps container port 5000 to host port 5000
+	
+	
+* to push to registry
+docker tag 3906bf872e84 http://192.168.56.101:5000/priv-test
+ - id is image that we want to push id after it is new name that should go in line with registry
+ 	priv-test is name that image will have on registry
+
+docker push 192.168.56.101:5000/priv-test
+	- ip is related to registry
+
+* it is possible that https will not work in that case following does the trick (UNSAFE):
+
+sudo service docker stop
+docker daemon --insecure-registry 192.168.56.101:5000 &
+
+* you can also edit following file:
+	vim /etc/default/docker
+	
+* and add line:
+	DOCKER_OPTS="--insecure-registry 192.168.56.101:5000"
+
+* SECURE WAY would require setup of ssl so that docker would communicate on https
+
+* ON CENTOS
+	-	edit: 
+		/usr/lib/systemd/system/docker.service
+	- 	add:
+		ExecStart=/usr/bin/docker -d $OPTIONS $DOCKER_STORAGE_OPTIONS 
+			-- insecure-registry 192.168.56.101:5000
+			
+* THIS WAS OLD WAY OF REGISTRY SETUP
