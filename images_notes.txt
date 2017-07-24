@@ -31,3 +31,6 @@ docker pull coreos/apache * example
 * container can run single process and it will stop once this process ends
 
 docker top * shows processes running in docker
+
+* TO REMOVE ALL IMAGES
+docker rmi $(docker images -a)

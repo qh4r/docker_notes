@@ -1,0 +1,66 @@
+** CACHE NOTE - all images are getting cached so system uses data from instructions of
+** dockers that it got
+
+* EACH  AND EVERY COMMAND IN DOCKER FILE CREATES NEW LAYER
+* this means that Dockerfile.example next to this file will create 6 layers on top of
+* 5 layers of ubuntu image! (Maintainer and CMD also create layers!)
+
+** SIDE NOTES **
+	in VIM:
+		v - to select by character
+		V - to select line
+		ctrl + v - to select rectangle
+		d - to cut
+		y - to copy
+		p - to paste after cursor
+		P - to paste before cursor
+** SIDE NOTES END**
+
+* expose makes sure that given port of this image will be available for the host
+* in any of the containers created from that image 
+EXPOSE {port}
+
+* to build:
+docker build -t="webserver" .
+* . at the end means to build in this place (root at current folder)
+* to start webserver from dockerfile (given name is webserver)
+docker run -d -p 80:80 webserver
+* that wawy, we are maping host port 80 to docker container 
+* that is running http daemon and listening on port 80 
+
+* to create less layers it's best to combine multiple run instructions with && and \
+* example is visible in webserver Dockerfile
+
+* CMD executes at container RUNTIME
+* RUN executes at container BUILD
+
+* if we pass command to docer (using -c ) this will override any CMD instructions
+** THERE CAN ONLY BE 1 CMD INSTRUCTION PER DOCKERFILE ** !!
+* (only last one will be effective)
+
+* CMD has 2 style:
+	* shell form, commands get prepended by '/bin/sh -c', ex:
+		CMD echo "Hello"
+	* Exec Form, the one that was used so far, 
+		- IT ALLOWS TO EXECUTE COMMANDS IN ANY CONTAINER
+			* ALSO THOSE W/O SHELL *
+		[command, ...arguments]
+		ex:
+		CMD ["echo", "Hello"]
+
+* ENTRYPOINT is better for defining commands to be run at container start
+* it can  not be overriden by run with -c argument!
+* anything that we pass to docker run command (after docker name) is passed as an argument
+* to ENTRYPOINT instruction
+
+FROM ubuntu:15.04
+RUN apt-get update && apt-get install -y iputils-ping
+
+ENTRYPOINT ["echo"]
+
+* such dockerfile will print anything passed ass arguments
+ docker build -t="echoer" .
+ * command:
+ 	docker run echoer test asd
+ * would result in printing:
+ 	test asd
