@@ -1,0 +1,39 @@
+* VOLUMES are about decoupling data from containers
+* AND sharing data between them // perfect for db? //
+
+* idea is to store data on docker host filesystem  and refer to it from containers
+
+* you run volume quite similarly to typical container:
+docker run -it -v /test-vol --name=vol_container ubuntu:15.04 /bin/bash
+
+* typical unix mount rules:
+* any data inside mount point becomes unavailable while there is a volume mounted in it
+* in this case /test-vol
+
+* THIS WOULD CREATE FOLDER /test-vol in docker root of created container
+
+* creating file inside test-vol would realy create a file on host (but it would be mounted on cotnainer)
+
+* you can find info about mounted folder location on host in 'docker inspect' in 'Mounts' section
+ - in current case:
+ 	cat /var/lib/docker/volumes/80811da3a38f43246287328f217f0a236f5944ae1c7c1b5a44317d590490d521/_data/test_file 
+
+* NOW - TO RUN OTHER CONTAINER USING SAME VOLUMES WE USE:
+docker run -it --volumes-from=vol_container --name=sharing_container ubuntu:15.04 /bin/bash
+
+* this will cause volume to be shared between 2 containers
+
+* you can map local docker host folders using -v /data:/data
+	where 1st /data is location on container
+	and 2nd /data is location on host
+
+you can use VOLUMES Dockerfile command like this:
+
+FROM ubuntu:15.04
+RUN apt-get update && apt-get install -y iputils-ping
+
+VOLUME /test-vol
+
+docker rm -v * removes volume
+
+*there is also  docker volume command that lets you ls rm create and inspect

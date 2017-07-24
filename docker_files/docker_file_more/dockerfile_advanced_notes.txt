@@ -64,3 +64,44 @@ ENTRYPOINT ["echo"]
  	docker run echoer test asd
  * would result in printing:
  	test asd
+
+* however attempt to run /bin/bash for example will also be interpreted
+* as text to print (in case of CMD this would override CMD)
+docker run -it  echoer /bin/bash
+* just prints /bin/bash
+
+* we can have CMD pass default parameters to ENTRYPOINT
+* this will give us ability to override those default params with -c
+
+***** EXAMPLE:
+Dockerfile with a tweak:
+
+FROM ubuntu:15.04
+RUN apt-get update && apt-get install -y iputils-ping
+
+ENTRYPOINT ["echo"]
+CMD ["Hello", "Docker"]
+
+docker build -t="echoer2" .
+docker run echoer2
+* prints: Hello Docker
+docker run echoer2 CHANGE CHANGE
+* prints: CHANGE CHANGE
+
+***** END EXAMPLE
+
+* !!! you can override ENTRYPOINT using --entrypoint argument !!!
+
+* you can pass Environmental variables to container using ENV command
+
+FROM ubuntu:15.04
+RUN apt-get update && apt-get install -y iputils-ping
+
+ENV var1=test var2=sekret
+
+* inside this docker there are var1 and var2 env variables (can use env to see all)
+
+* echo ${var1}  would print ->  test
+
+*** SIDE NOTE : ${} interprets variable $() runs command !!!! ***
+
