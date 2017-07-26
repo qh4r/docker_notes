@@ -1,0 +1,11 @@
+* you can change logging level with -l option, example:
+- docker daemon -l debug &
+** & is to run in the bacground and not block terminal process
+** you need to stop daemon before runnig that
+
+* you can 'follow log'
+- docker logs -f {container name or id}
+
+* even if Dockerfile build failed docker will create temp image marked as <none>
+* containing last successful comand from atemted Dockerfile
+* you can run container and try to solve stuff from it
