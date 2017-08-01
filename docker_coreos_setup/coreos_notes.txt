@@ -1,0 +1,46 @@
+* for starters:
+brew cask install virtualbox
+brew cask install vagrant 
+git clone https://github.com/coreos/coreos-vagrant.git centOS
+cd centOS
+vagrant up
+
+** SystemD replaces System Init in new linux distros.
+ * it allows parrarel initialization and declarations of services being dependant on others
+ * it reduces overhead of init and shell
+ * it is adapted in most new linux distros beside coreOS
+ 
+ * vagrant status * lists running machines
+ * vagrant ssh joins the vm
+ 
+ sudo vi /etc/systemd/system/test.service
+
+sudo systemctl enable /etc/systemd/system/test.service 
+sudo systemctl start test.setvice
+
+* to get some info on unit
+* sudo systemctl list-units | grep test 
+* better:
+sudo systemctl list-units test.service
+systemctl status test.service
+
+* to list terminal logs of unit
+ - journalctl -u test.service
+* to follow them
+ - journalctl -u -f test.service
+ 
+ *** BETTER USE SUDO OTHERVISE COREOS ASKS FOR PASSWOR ***
+ 
+ * AFTER APPLYING CHANGES TO SSYTEM CONFIG WE NEED TO:
+sudo systemctl daemon-reload
+sudo systemctl restart test.service
+
+** ETCD key value store that allows to share configuration between containers
+* its a key value store
+etcdctl set /msg Test * sets /msg to Test
+
+etcdctl get /msg  * would give Test
+
+etcdctl rm /msg * removes /msg key value pair 
+
+etcdctl cluster-health * checks cluster 
