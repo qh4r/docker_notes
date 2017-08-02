@@ -1,0 +1,6 @@
+* in unix : (colon) is a separator so './:./asd' mean './' and './asd'
+
+# work dir is starting dir on docker
+
+# in volumes : means mapping
+ /app:/asd mapps local app to asd 

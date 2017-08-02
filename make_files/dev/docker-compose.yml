@@ -1,0 +1,7 @@
+version: "2" #this is version 2 file, version 3 has different specyfication
+services:
+    test:
+        image: node:latest
+        working_dir: .
+        volumes: 
+            - ./
