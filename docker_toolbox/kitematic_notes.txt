@@ -1,0 +1,5 @@
+* Kitematic is docker gui client
+* you need to login with docker hub credentials
+* TO USE DOCKER-MACHINE DOCKER DAEMON 
+	- enter setting and check 'use virtual machine instead of Native on next restart'
+* you can only fetch images via Kitematic while creating NEW containers

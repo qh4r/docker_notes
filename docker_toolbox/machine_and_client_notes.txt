@@ -1,0 +1,17 @@
+** docker-machine
+ * can be used to manage both local and remote machines 
+ * USE:
+ -- all commands use dfault if no name passed
+ * docker-machine start [m.name]
+ 	# to start machine
+ * docker-machine stop [m.name]
+ 	# to start machine
+ * docker-machine ls 
+ 	# to list available machines
+ * docker-machine status [m.name]
+ 	# to see if machine is running
+ * docker-machine env [m.name]
+ 	# to get command for local docker client target daemon machine setup
+ * docker-machine ip [m.name]
+ 	# to get ip of machine
+ 	
