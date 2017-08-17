@@ -15,3 +15,24 @@
  * docker-machine ip [m.name]
  	# to get ip of machine
  	
+** volume mounting examples
+
+
+* docker run -p [HOST port]:[CONTAINER port] -v[HOST _LOCATION]:[CONTAINER_LOCATION] [IMG_NAME]
+- docker run -p 3000:3000 -v $(pwd):/var/app node
+- docker run -p 3000:3000 -v /var/app node # no host location - will create automaticly in /etc/docker on host
+
+* running rm with -v flag ensures removal of any volumes mounted
+	docker rm -v [CONTAINER_KEY]
+	
+* --rm flag ensures that container gonna be removed right after it exits.
+	docker run -it --rm node node 	# run node command on node img 
+									# (so runs repl interactive (-it))
+									# and removes container on exit
+
+* use -w means --workdir="" # CAN BE USED TO SET DIR WHERE COMMANDS WILL BE EXECUTED
+* for example to run node code:
+	docker run --rm -p 3000:3000 -v $(pwd):/var/www -w /var/www node npm start
+	
+* you do not need to explicitly remove vloumes if you map to default location
+	-v [path] (no :)
