@@ -1,0 +1,35 @@
+* there are 2 ways of networking 
+	- OLD ONE - container linking
+	- NEW ONE - docker networking
+	
+** legacy CONTAINER LINKING
+	* need to run container with a name
+	  docker run -d --name test-postgres [IMAGE_NAMEd]
+	
+	* then we can use that name while running other container
+	  docker run -d --link test-postgres:postgres [IMAGE_NAME]
+	  * --link [NAME (given in --name)]:[alias - can be used in container linking]
+	
+	* you can link multiple containers like that
+	
+	
+*** SIDENOTE - uou can use docker exect to execute command in RUNNING CONTAINER
+	docker exec [command]
+	
+*** CONTAINER LINKING is not best suited for production
+
+*** CREATING AND USING NETWORK
+
+	docker network create --driver bridge [NETWORK_NAME]
+	
+	* bridge is one of available drivers
+
+*** you can ls and rm networks and more
+
+*** you run by:
+	docker run -d --net=[NETWORK_NAME] --name [ALIAS] mongo
+	
+	* ALIAS IS STILL USED LIKE IT WAS IN CONTAINER LINKING
+	
+** You can inspect network using:
+	docker network inspect [network_name]
