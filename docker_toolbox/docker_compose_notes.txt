@@ -1,0 +1,39 @@
+*** DOCKER COMPOSE
+
+* CONTAINERS are called SERVICES in DOCKER-COMPOSE
+
+* docker-compose.yml defines all services
+
+* commands:
+	* docker-compose build # builds services
+	* docker-compose up # starts services
+	* docker-compose down # stops and removes services
+		* adding --rmi all - removes all associated images
+		* adding --volumes removes all volumes used by services
+	
+	** those commands will run for all services defined in docker compose
+	 * you can run command for single service if you add service name after command
+	
+*** example:
+version: '2' 	# was not needed in version 1 
+				# gives docker-compose information to use version 2 api
+
+services:
+
+  node: # service name and it's config
+    build: 
+      context: .	# location of build context (like last argument in docker build)
+      dockerfile: node.dockerfile # dockerfile name
+    ports: 		# ports mapping (host:container)
+     - "3000:3000"
+    networks: 	# link to network that container will conect to
+      - nodeapp-network
+      
+  mongodb: # second service and it's config
+    image: mongo
+    networks:
+      - nodeapp-network
+
+networks: # networks need to be declared to let containers use them
+  nodeapp-network:
+    driver: bridge
