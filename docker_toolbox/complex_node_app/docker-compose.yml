@@ -1,0 +1,100 @@
+    # 1. Update config values (localhost --> mongo and localhost --> redis) in config.development.json
+    # 2. Set APP_ENV environment variable to proper value in Dockerfile-redis (default is "development")
+    #    export APP_ENV=development
+    # 3. Run docker-compose build
+    # 4. Run docker-compose up
+    # 5. Live long and prosper
+    
+version: "2"
+ 
+services:
+    nginx:
+      container_name: nginx
+      build: 
+        context: .
+        dockerfile: .docker/docker-nginx.dockerfile
+      links:
+        - node1:node1
+        - node2:node2
+        - node3:node3
+      ports:
+        - "80:80"
+        - "443:443"
+      env_file:
+        - ./.docker/env/app.${APP_ENV}.env
+      networks:
+        - codewithdan-network
+        
+    node1:
+      container_name: node-codewithdan-1
+      build: 
+        context: .
+        dockerfile: .docker/docker-node-codewithdan.dockerfile
+      ports:
+      - "8080"
+      volumes:
+        - .:/var/www/codewithdan
+      working_dir: /var/www/codewithdan
+      env_file:
+        - ./.docker/env/app.${APP_ENV}.env
+      networks:
+        - codewithdan-network
+      
+    node2:
+      container_name: node-codewithdan-2
+      build: 
+        context: .
+        dockerfile: .docker/docker-node-codewithdan.dockerfile
+      ports:
+      - "8080"
+      volumes:
+        - .:/var/www/codewithdan
+      working_dir: /var/www/codewithdan
+      env_file:
+        - ./.docker/env/app.${APP_ENV}.env
+      networks:
+        - codewithdan-network
+      
+    node3:
+      container_name: node-codewithdan-3
+      build: 
+        context: .
+        dockerfile: .docker/docker-node-codewithdan.dockerfile
+      ports:
+      - "8080"
+      volumes:
+        - .:/var/www/codewithdan
+      working_dir: /var/www/codewithdan
+      env_file:
+        - ./.docker/env/app.${APP_ENV}.env
+      networks:
+        - codewithdan-network
+      
+    mongo:
+      container_name: mongo
+      build:
+        context: .
+        dockerfile: .docker/docker-mongo.dockerfile
+      ports:
+      - "27017:27017"
+      env_file:
+        - ./.docker/env/mongo.${APP_ENV}.env
+        - ./.docker/env/app.${APP_ENV}.env
+      networks:
+        - codewithdan-network
+        
+    redis:
+      container_name: redis
+      build: 
+        context: .
+        dockerfile: .docker/docker-redis.dockerfile
+      ports:
+        - "6379"
+      env_file:
+        - ./.docker/env/app.${APP_ENV}.env
+      networks:
+        - codewithdan-network
+        
+networks:
+    codewithdan-network:
+      driver: bridge

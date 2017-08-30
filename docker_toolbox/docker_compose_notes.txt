@@ -7,6 +7,7 @@
 * commands:
 	* docker-compose build # builds services
 	* docker-compose up # starts services
+	    * -d for daemon mode
 	* docker-compose down # stops and removes services
 		* adding --rmi all - removes all associated images
 		* adding --volumes removes all volumes used by services
@@ -37,3 +38,8 @@ services:
 networks: # networks need to be declared to let containers use them
   nodeapp-network:
     driver: bridge
+    
+    
+******
+
+docker-compose logs 	# gives us all logs from running docker (from compose file)
